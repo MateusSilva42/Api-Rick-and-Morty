@@ -3,12 +3,12 @@ async function getData(page){
     try{
         const res = await api.get('/character', {
             params: {
-                page: 1
+                page: page
             }
         })
         return res.data
     }catch(error){
-        console.log(error)
+        console.log(error.message)
     }
    
 
@@ -21,7 +21,7 @@ async function getLocations(){
         const res = await api.get('/location')
         return res.data
     }catch(error){
-        console.log(error)
+        console.log(error.message)
     }
 }
 
@@ -31,7 +31,7 @@ async function getEpisodes(){
         const res = await api.get('/episode')
         return res.data
     }catch(error){
-        console.log(error)
+        console.log(error.message)
     }
 }
 
@@ -39,9 +39,9 @@ async function renderCards(page){
     const cardsContainer = document.querySelector('#cards-container')
     let counter = 1
 
-    if(!page) page === 1
+    // if(!page) page === 1
 
-    const charData = await getData()
+    const charData = await getData(page)
 
     charData.results.forEach((char)=>{
         const article = document.createElement('article')
@@ -95,6 +95,54 @@ async function renderCards(page){
 
 }
 
+async function renderPageButtons(currentPage){
+    const data = await getData()
+    const totalPages = data.info.pages
+
+    const pageNavEl = document.querySelector('#page-nav')
+
+    for(i = 1; i<= totalPages; i++){
+        const pageButton = document.createElement('button')
+        pageButton.value = i
+        pageButton.innerText = i
+        pageButton.classList.add('page-button')
+
+        if(i == currentPage){
+            pageButton.setAttribute('disabled', '')
+        } else {
+            pageButton.addEventListener('click', ()=>{
+                renderPage(pageButton.value)
+                window.scrollTo(0,0)
+    
+            })
+        }
+        
+     
+
+        pageNavEl.appendChild(pageButton)
+    }
+}
+
+function removerCards(){
+    const cardsContainer = document.querySelector('#cards-container')
+
+    cardsContainer.innerHTML = ''
+}
+
+function removerButtons(){
+    const buttonsContainer = document.querySelector('#page-nav')
+
+    buttonsContainer.innerHTML = ''
+}
+
+function renderPage(page){
+    removerCards()
+    removerButtons()
+
+    renderCards(page)
+    renderPageButtons(page)
+}
+
 async function getOverallData(){
     const totalChar = await getData()
     const totalLocations = await getLocations()
@@ -110,8 +158,13 @@ async function getOverallData(){
 
 }
 
+async function buttonFunction(){
 
+    const pageButtons =  document.querySelectorAll('.page-button')
 
-getData()
-renderCards()
+}
+
+renderCards(1)
+renderPageButtons(1)
 getOverallData()
+buttonFunction()
