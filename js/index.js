@@ -1,17 +1,4 @@
-async function getData(page) {
-  try {
-    const res = await api.get("/character", {
-      params: {
-        page: page,
-      },
-    });
-    return res.data;
-  } catch (error) {
-    console.log(error.message);
-  }
-}
-
-async function searchName(page, name) {
+async function getData(page, name) {
   try {
     const res = await api.get("/character", {
       params: {
@@ -21,7 +8,7 @@ async function searchName(page, name) {
     });
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    alert(error.message);
   }
 }
 
@@ -30,7 +17,7 @@ async function getLocations() {
     const res = await api.get("/location");
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    alert(error.message);
   }
 }
 
@@ -39,7 +26,7 @@ async function getEpisodes() {
     const res = await api.get("/episode");
     return res.data;
   } catch (error) {
-    console.log(error.message);
+    alert(error.message);
   }
 }
 
@@ -49,7 +36,7 @@ async function renderCards(page, name = "") {
   let currentCharData = await getData(page);
 
   if (name) {
-    currentCharData = await searchName(page, name);
+    currentCharData = await getData(page, name);
   }
 
   const charData = currentCharData;
@@ -106,7 +93,7 @@ async function renderPageButtons(currentPage, name = "") {
   let currentData = await getData();
 
   if (name) {
-    currentData = await searchName(1, name);
+    currentData = await getData(1, name);
   }
   const data = currentData;
   const totalPages = data.info.pages;
