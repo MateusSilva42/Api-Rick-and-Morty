@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Api Rick and Morty</title>
     <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="style/cards.css">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,15 +17,8 @@
   <body>
     <header>
       <div id="page-icon">
-        <div
-          id="image-temp"
-          style="
-            border-radius: 90px;
-            background-color: greenyellow;
-            width: 30px;
-            height: 30px;
-          "
-        ></div>
+      <img id="top-icon" src="./images/RICK_MORTY_ICON.png" alt="rick and morty Icon" srcset="">
+
       </div>
       <div id="page-title">
         <h1>API de Rick and Morty</h1>
@@ -35,8 +29,45 @@
     </header>
 
     <main>
-        
-    </main>
-    <footer></footer>
+      <section id="cards-container">
+
+        <!-- Cards de Personagens -->
+
+        <!-- Card Exemplo -->
+
+        <!-- <article class="card">
+          <div> <img class="card-image" src="./images/default.png" alt="imagem-padrão"></div>
+          <div class ="card-data">
+              <h3>Título do Card</h3>
+              <div class="char-status">
+                <div class="status alive">
+                </div> <p> Vivo - Humano</p>
+              </div>
+              
+          </div>
+         </article> -->
+
+      </section>
+     
+        </main>
+    <footer>
+      <img id="img-footer" src="./images/rick-and-morty-portal-shoes-white-clothing-zavvi-23.png" alt="rick and morty footer image">
+
+      <section id="page-footer">
+        <div id="overall-data">
+          <p>PERSONAGENS: <span id="qtd-char">  </span></p>
+          <p>LOCALIZAÇÕES: <span id="qtd-locations"> XX </span></p>
+          <p>EPISÓDIOS: <span id="qtd-episodes"> XX </span></p>
+        </div>
+
+        <div id="copyright">
+          <p>Desenvolvido por Mateus Silva em 2023 &copy </p>
+        </div>
+      </section>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./js/api-config.js"></script>
+    <script src="./js/index.js"></script>
   </body>
 </html>

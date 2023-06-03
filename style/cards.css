@@ -1,0 +1,52 @@
+.card{
+    display: flex;
+    height: 150px;
+    width: 30%;
+    margin-bottom: 48px;
+}
+
+.card-image{
+    height: 150px;
+}
+
+.card-data{
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card h3{
+    color: green;
+    margin: 0;
+    padding: 0;
+}
+
+.card p{
+    margin: 0;
+    padding: 0;
+}
+
+.char-status{
+    display: flex;
+    align-items: center;
+}
+
+.status {
+    height: 5px;
+    width: 5px;
+    border-radius: 100px;
+    margin-right: 5px;
+
+}
+
+.alive{
+    background-color: green;
+}
+
+.dead{
+    background-color: red;
+}
+
+.unknown{
+    background-color: gray;
+}

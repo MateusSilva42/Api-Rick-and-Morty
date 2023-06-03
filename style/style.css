@@ -1,25 +1,99 @@
-header{
-    position: relative;
-    text-align: center;
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+  position: relative;
+  text-align: center;
+}
+
+#top-icon{
+  border-radius: 90px;
+  width: 30px;
+  height: 30px;
+}
+
+#page-icon{
+  text-align: left;
+  margin: 5px 0 0 5px;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
 }
 
 h1 {
-    color: #105718;
-    font-weight: bolder;
-    font-family: 'Konkhmer Sleokchher', cursive;
-    margin: 0 0 9px 0;
-    font-size: 3rem;
+  color: #105718;
+  font-weight: bolder;
+  font-family: "Konkhmer Sleokchher", cursive;
+  margin: 0 0 9px 0;
+  font-size: 3rem;
 }
 
 #page-title {
-    position: static;
-    text-align: center;
+  position: static;
+  text-align: center;
+}
+
+#search {
+  width: 40%;
+  height: 2rem;
+  border-radius: 9px;
+  padding: 10px;
+  border: 2px solid #cfcccc;
+}
+
+#cards-container{
+  display: flex;
+  width: 80%;
+  flex-wrap: wrap;
+  align-content: baseline;
+  margin-top: 100px;
+  justify-content: space-around;
 
 }
 
-#search{
-    width: 40%;
-    height: 2rem;
-    border-radius: 9px;
-    padding: 10px;
+footer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#img-footer{
+  height: 350px;
+}
+
+.separator{
+  display: block;
+  width: 80%;
+  background-color: rgb(8, 151, 8);
+  opacity: 80%;
+  margin-bottom: 48px;
+  height: 1px;
+}
+
+#page-footer{
+  background-color: #1f2821;
+  width: 100%;
+  color: #848484;
+}
+
+#overall-data{
+  display: flex;
+  justify-content: center;
+  height: 200px;
+}
+
+#overall-data p{
+  margin: 48px 16px;
+}
+
+#copyright{
+  display: flex;
+  justify-content: center;
 }
