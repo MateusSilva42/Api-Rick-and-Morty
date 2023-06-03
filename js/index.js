@@ -8,7 +8,7 @@ async function getData(page, name) {
     });
     return res.data;
   } catch (error) {
-    alert(error.message);
+    console.log(error.message);
   }
 }
 
@@ -17,7 +17,7 @@ async function getLocations() {
     const res = await api.get("/location");
     return res.data;
   } catch (error) {
-    alert(error.message);
+    console.log(error.message);
   }
 }
 
@@ -26,7 +26,7 @@ async function getEpisodes() {
     const res = await api.get("/episode");
     return res.data;
   } catch (error) {
-    alert(error.message);
+    console.log(error.message);
   }
 }
 
@@ -41,52 +41,72 @@ async function renderCards(page, name = "") {
 
   const charData = currentCharData;
 
-  charData.results.forEach((char) => {
-    const article = document.createElement("article");
-    article.classList.add("card");
+  if(charData){
+    charData.results.forEach((char) => {
+        const article = document.createElement("article");
+        article.classList.add("card");
+    
+        const divImgContainer = document.createElement("div");
+        const imgEl = document.createElement("img");
+        imgEl.classList.add("card-image");
+        imgEl.src = char.image;
+    
+        const divCardData = document.createElement("div");
+        divCardData.classList.add("card-data");
+    
+        const divCharStatus = document.createElement("div");
+        divCharStatus.classList.add("char-status");
+    
+        const divStatusColor = document.createElement("div");
+        divStatusColor.classList.add("status");
+        divStatusColor.classList.add(char.status.toLowerCase());
+    
+        let cardH3 = document.createElement("h3");
+        cardH3.innerText = char.name;
+    
+        let cardP = document.createElement("p");
+        cardP.innerText = `${char.status} - ${char.species}`;
+    
+        divCharStatus.appendChild(divStatusColor);
+        divCharStatus.appendChild(cardP);
+    
+        divCardData.appendChild(cardH3);
+        divCardData.appendChild(divCharStatus);
+    
+        divImgContainer.appendChild(imgEl);
+    
+        article.appendChild(divImgContainer);
+        article.appendChild(divCardData);
+    
+        cardsContainer.appendChild(article);
+    
+        if (counter % 2 === 0) {
+          const hr = document.createElement("hr");
+          hr.classList.add("separator");
+          cardsContainer.appendChild(hr);
+        }
+    
+        counter++;
+      });
+  } else {
 
-    const divImgContainer = document.createElement("div");
-    const imgEl = document.createElement("img");
-    imgEl.classList.add("card-image");
-    imgEl.src = char.image;
+    const notFound = document.createElement('article')
+    notFound.setAttribute('id', 'not-found')
 
-    const divCardData = document.createElement("div");
-    divCardData.classList.add("card-data");
+    const imgNotFound = document.createElement('img')
+    imgNotFound.setAttribute('id', 'img-not-found')
+    imgNotFound.src = './images/404.png'
 
-    const divCharStatus = document.createElement("div");
-    divCharStatus.classList.add("char-status");
+    const notFoundH2 = document.createElement('h2')
+    notFoundH2.innerText = '404 - Nenhum Personagem Encontrado :('
 
-    const divStatusColor = document.createElement("div");
-    divStatusColor.classList.add("status");
-    divStatusColor.classList.add(char.status.toLowerCase());
+    notFound.appendChild(imgNotFound)
+    notFound.appendChild(notFoundH2)
 
-    let cardH3 = document.createElement("h3");
-    cardH3.innerText = char.name;
+    cardsContainer.appendChild(notFound)
 
-    let cardP = document.createElement("p");
-    cardP.innerText = `${char.status} - ${char.species}`;
-
-    divCharStatus.appendChild(divStatusColor);
-    divCharStatus.appendChild(cardP);
-
-    divCardData.appendChild(cardH3);
-    divCardData.appendChild(divCharStatus);
-
-    divImgContainer.appendChild(imgEl);
-
-    article.appendChild(divImgContainer);
-    article.appendChild(divCardData);
-
-    cardsContainer.appendChild(article);
-
-    if (counter % 2 === 0) {
-      const hr = document.createElement("hr");
-      hr.classList.add("separator");
-      cardsContainer.appendChild(hr);
-    }
-
-    counter++;
-  });
+  }
+  
 }
 
 async function renderPageButtons(currentPage, name = "") {

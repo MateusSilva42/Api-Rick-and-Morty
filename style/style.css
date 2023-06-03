@@ -131,3 +131,17 @@ footer{
   background-color: #0f4214;
   cursor: default;
 }
+
+#not-found{
+  display: flex;
+  align-items: center;
+  margin: 56px 0;
+}
+
+#img-not-found{
+  height: 250px;
+}
+
+#not-found h2{
+  color: green;
+}
