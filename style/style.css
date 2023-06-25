@@ -1,3 +1,7 @@
+html{
+  scroll-behavior: smooth;
+}
+
 body{
     margin: 0;
     padding: 0;
@@ -54,7 +58,7 @@ h1 {
   padding-right:3rem ;
 }
 
-#cards-container{
+/* #cards-container{
   display: flex;
   width: 80%;
   flex-wrap: wrap;
@@ -62,7 +66,7 @@ h1 {
   margin-top: 100px;
   justify-content: space-around;
 
-}
+} */
 
 footer{
   display: flex;
@@ -104,31 +108,36 @@ footer{
   justify-content: center;
 }
 
-#page-nav{
+/* #page-nav{
   display: flex;
   flex-wrap: wrap;
   width: 50%;
   background-color: green;
   padding: 8px;
   border-radius: 40px;
-}
+} */
 
-#page-nav button{
+/* #page-nav button{
   background-color: #11a722;
   color: white;
   border: 1px solid white;
   border-radius: 30px;
   cursor: pointer;
   margin: 2px 1px;
-}
+} */
 
-#page-nav button:hover {
+/* #page-nav button:hover {
   background-color: #58d667;
 
-}
+} */
 
-#page-nav button:disabled{
+/* #page-nav button:disabled{
   background-color: #0f4214;
+  cursor: default;
+} */
+
+.btn-disabled{
+  color: gray!important;
   cursor: default;
 }
 

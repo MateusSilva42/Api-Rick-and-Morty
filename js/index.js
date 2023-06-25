@@ -21,18 +21,26 @@ async function getLocations() {
   }
 }
 
-async function getEpisodes() {
-  try {
-    const res = await api.get("/episode");
-    return res.data;
-  } catch (error) {
-    console.log(error.message);
+async function getEpisodes(char = false, episode) {
+  if (char) {
+    try {
+      const res = await axios.get(episode);
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  } else {
+    try {
+      const res = await api.get("/episode");
+      return res.data;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 }
 
 async function renderCards(page, name = "") {
-  const cardsContainer = document.querySelector("#cards-container");
-  let counter = 1;
+  const cardsRow = document.querySelector("#cards-row");
   let currentCharData = await getData(page);
 
   if (name) {
@@ -41,112 +49,258 @@ async function renderCards(page, name = "") {
 
   const charData = currentCharData;
 
-  if(charData){
-    charData.results.forEach((char) => {
-        const article = document.createElement("article");
-        article.classList.add("card");
-    
-        const divImgContainer = document.createElement("div");
-        const imgEl = document.createElement("img");
-        imgEl.classList.add("card-image");
-        imgEl.src = char.image;
-    
-        const divCardData = document.createElement("div");
-        divCardData.classList.add("card-data");
-    
-        const divCharStatus = document.createElement("div");
-        divCharStatus.classList.add("char-status");
-    
-        const divStatusColor = document.createElement("div");
-        divStatusColor.classList.add("status");
-        divStatusColor.classList.add(char.status.toLowerCase());
-    
-        let cardH3 = document.createElement("h3");
-        cardH3.innerText = char.name;
-    
-        let cardP = document.createElement("p");
-        cardP.innerText = `${char.status} - ${char.species}`;
-    
-        divCharStatus.appendChild(divStatusColor);
-        divCharStatus.appendChild(cardP);
-    
-        divCardData.appendChild(cardH3);
-        divCardData.appendChild(divCharStatus);
-    
-        divImgContainer.appendChild(imgEl);
-    
-        article.appendChild(divImgContainer);
-        article.appendChild(divCardData);
-    
-        cardsContainer.appendChild(article);
-    
-        if (counter % 2 === 0) {
-          const hr = document.createElement("hr");
-          hr.classList.add("separator");
-          cardsContainer.appendChild(hr);
-        }
-    
-        counter++;
-      });
+  if (charData) {
+    charData.results.forEach(async (char) => {
+      // console.log(char.location.name) -- traz ultima localização do personagem
+      const episode = await getEpisodes(true, char.episode[0]);
+
+      // DIVS pais
+      const article = document.createElement("article");
+      article.classList.add(
+        "col-6",
+        "col-xl-5",
+        "h-50",
+        "col-lg-5",
+        "d-flex",
+        "justify-content-center",
+        "char-card",
+        "text-light"
+      );
+
+      const divContainer = document.createElement("div");
+      divContainer.classList.add(
+        "container",
+        "d-flex",
+        "justify-content-lg-start",
+        "justify-content-center",
+        "bg-dark",
+        "rounded",
+        "m-0",
+        "p-0",
+        "fit-content"
+      );
+
+      const divRowIntern = document.createElement("div");
+      divRowIntern.classList.add("row", "d-flex", "flex-column", "flex-lg-row");
+
+      // DIV da imagem do personagem
+      const divColImg = document.createElement("div");
+      divColImg.classList.add(
+        "col-12",
+        "col-lg-5",
+        "d-flex",
+        "align-items-center"
+      );
+
+      const divImage = document.createElement("div");
+      divImage.classList.add("fit-content", "m-1");
+
+      const charImage = document.createElement("img");
+      charImage.classList.add("img-fluid", "rounded", "h-100");
+      charImage.src = char.image;
+
+      // DIV dos dados dos personagens
+      const divColData = document.createElement("div");
+      divColData.classList.add(
+        "col",
+        "d-flex",
+        "align-items-center",
+        "pt-3",
+        "pb-3"
+      );
+
+      const divCardData = document.createElement("div");
+      divCardData.classList.add("card-data");
+
+      const cardTitle = document.createElement("h3");
+      cardTitle.classList.add("fw-bold");
+      cardTitle.innerText = char.name;
+
+      // CHAR STATUS
+      const divCharStatus = document.createElement("div");
+      divCharStatus.classList.add("char-status");
+
+      const divCharActualStatus = document.createElement("div");
+      divCharActualStatus.classList.add("status", char.status.toLowerCase());
+
+      const divCharStatusText = document.createElement("p");
+      divCharStatusText.innerText = `${char.status} - ${char.species}`;
+
+      const divLastLocation = document.createElement("div");
+
+      const pLastLocationTitle = document.createElement("p");
+      pLastLocationTitle.classList.add("char-info-title");
+      pLastLocationTitle.innerText = "Última localização conhecida";
+
+      const pLastLocationText = document.createElement("p");
+      pLastLocationText.classList.add("char-info");
+      pLastLocationText.innerText = char.location.name;
+
+      const DivLastSeen = document.createElement("div");
+
+      const pLastSeenTitle = document.createElement("p");
+      pLastSeenTitle.classList.add("char-info-title");
+      pLastSeenTitle.innerText = "Visto a última vez em:";
+
+      const pLastSeenText = document.createElement("p");
+      pLastSeenText.classList.add("char-info");
+      pLastSeenText.innerText = episode.name;
+
+      //Montagem da estrutura
+      //IMAGE
+      divImage.appendChild(charImage);
+      divColImg.appendChild(divImage);
+      divRowIntern.appendChild(divColImg);
+
+      //CHAR DATA
+      divCharStatus.appendChild(divCharActualStatus);
+      divCharStatus.appendChild(divCharStatusText);
+
+      divLastLocation.appendChild(pLastLocationTitle);
+      divLastLocation.appendChild(pLastLocationText);
+
+      DivLastSeen.appendChild(pLastSeenTitle);
+      DivLastSeen.appendChild(pLastSeenText);
+
+      divCardData.appendChild(cardTitle);
+      divCardData.appendChild(divCharStatus);
+      divCardData.appendChild(divLastLocation);
+      divCardData.appendChild(DivLastSeen);
+
+      divColData.appendChild(divCardData);
+      divRowIntern.appendChild(divColData);
+
+      divContainer.appendChild(divRowIntern);
+
+      article.appendChild(divContainer);
+
+      cardsRow.appendChild(article);
+    });
   } else {
+    const notFound = document.createElement("article");
+    notFound.setAttribute("id", "not-found");
 
-    const notFound = document.createElement('article')
-    notFound.setAttribute('id', 'not-found')
+    const imgNotFound = document.createElement("img");
+    imgNotFound.setAttribute("id", "img-not-found");
+    imgNotFound.src = "./images/404.png";
 
-    const imgNotFound = document.createElement('img')
-    imgNotFound.setAttribute('id', 'img-not-found')
-    imgNotFound.src = './images/404.png'
+    const notFoundH2 = document.createElement("h2");
+    notFoundH2.innerText = "404 - Nenhum Personagem Encontrado :(";
 
-    const notFoundH2 = document.createElement('h2')
-    notFoundH2.innerText = '404 - Nenhum Personagem Encontrado :('
+    notFound.appendChild(imgNotFound);
+    notFound.appendChild(notFoundH2);
 
-    notFound.appendChild(imgNotFound)
-    notFound.appendChild(notFoundH2)
+    cardsRow.appendChild(notFound);
+  }
+}
 
-    cardsContainer.appendChild(notFound)
+//CRIA A ESTRUTURA DE CADA BOTÃO DE PÁGINA
+function createpageBtn(currentPage, modifier, name, totalPages, disabled = false) {
+  const ulPagination = document.querySelector("#ul-pagination");
+  const typeMod = typeof modifier;
+
+  const liEl = document.createElement("li");
+  liEl.classList.add("page-item");
+
+  const aEl = document.createElement("a");
+
+  aEl.classList.add("page-link");
+
+  typeMod == "string"
+    ? (aEl.innerText = modifier)
+    : (aEl.innerText = currentPage + modifier);
+  if (disabled) {
+    aEl.classList.add("btn-disabled");
+    liEl.appendChild(aEl);
+    ulPagination.appendChild(liEl);
+    return;
 
   }
-  
+  aEl.setAttribute("href", "#");
+  aEl.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    if (modifier === "Anterior") {
+      renderPage(currentPage - 1, name);
+    } else if (modifier === "Próximo") {
+      renderPage(currentPage + 1, name);
+    } else {
+      renderPage(currentPage + modifier, name);
+    }
+
+    window.scrollTo(0, 0, "smooth");
+  });
+
+  liEl.appendChild(aEl);
+  ulPagination.appendChild(liEl);
+
+  return;
 }
 
 async function renderPageButtons(currentPage, name = "") {
   let currentData = await getData();
+  let btnPreviousDisabled = false
+  let btnNextDisabled = false
 
   if (name) {
     currentData = await getData(1, name);
   }
+
   const data = currentData;
   const totalPages = data.info.pages;
+  let previousPage;
+  let nextPage;
 
-  const pageNavEl = document.querySelector("#page-nav");
+  currentPage === 1 ? (previousPage = 1) : (previousPage = currentPage - 1);
+  nextPage === totalPages
+    ? (nextPage = totalPages)
+    : (nextPage = currentPage + 1);
 
-  for (i = 1; i <= totalPages; i++) {
-    const pageButton = document.createElement("button");
-    pageButton.value = i;
-    pageButton.innerText = i;
-    pageButton.classList.add("page-button");
+  console.log(currentPage);
 
-    if (i == currentPage) {
-      pageButton.setAttribute("disabled", "");
-    } else {
-      pageButton.addEventListener("click", () => {
-        renderPage(pageButton.value, name);
-        window.scrollTo(0, 0);
-      });
-    }
+  if(currentPage === 1) btnPreviousDisabled = true
+    
+  if(currentPage === totalPages) btnNextDisabled = true
 
-    pageNavEl.appendChild(pageButton);
-  }
+  // TRAVAR RENDER SE NÃO TIVER MAIS PÁGINAS
+  // if(currentPage >= (totalPages - 4)) return
+    
+
+
+  createpageBtn(currentPage, "Anterior", name, totalPages, btnPreviousDisabled);
+  createpageBtn(currentPage, -2, name, totalPages);
+  createpageBtn(currentPage, -1, name, totalPages);
+  createpageBtn(currentPage, 0, name, totalPages);
+  createpageBtn(currentPage, 1, name, totalPages);
+  createpageBtn(currentPage, 2, name, totalPages);
+  createpageBtn(currentPage, "Próximo", totalPages, btnNextDisabled);
+
+  // ------------------ANTIGO ---------------------------------------
+  // const pageButton = document.createElement("button");
+  // pageButton.value = i;
+  // pageButton.innerText = i;
+  // pageButton.classList.add("page-button");
+
+  // if (i == currentPage) {
+  //   pageButton.setAttribute("disabled", "");
+  // } else {
+  //   pageButton.addEventListener("click", () => {
+  //     renderPage(pageButton.value, name);
+  //     window.scrollTo(0, 0);
+  //   });
+  // }
+
+  // pageNavEl.appendChild(pageButton);
 }
 
 function removerCards() {
-  const cardsContainer = document.querySelector("#cards-container");
+  const cardsContainer = document.querySelector("#cards-row");
 
   cardsContainer.innerHTML = "";
 }
 
 function removerButtons() {
-  const buttonsContainer = document.querySelector("#page-nav");
+  const buttonsContainer = document.querySelector("#ul-pagination");
 
   buttonsContainer.innerHTML = "";
 }

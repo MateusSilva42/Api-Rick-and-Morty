@@ -1,12 +1,16 @@
-.card{
+.char-card{
     display: flex;
-    height: 150px;
+    /* height: 200px; */
     width: 30%;
     margin-bottom: 48px;
 }
 
-.card-image{
-    height: 150px;
+/* .card-image{
+    max-height: 250px!important;
+} */
+
+.fit-content{
+    height: fit-content;
 }
 
 .card-data{
@@ -28,7 +32,20 @@
 
 .char-status{
     display: flex;
-    align-items: center;
+    align-items: baseline;
+}
+
+.char-info-title{
+    color: gray;
+    font-size: small;
+    font-weight: bold;
+    margin: 0;
+}
+
+.char-info{
+    font-size: 0.8rem;
+    margin: 0;
+    padding: 0;
 }
 
 .status {
