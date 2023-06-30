@@ -46,7 +46,7 @@ async function getData(page, name) {
     let charData = await getData(0, charName)
     let char = charData.results[0]
     let episode = await getEpisodes(true, char.episode[char.episode.length - 1]);
-    console.log(charData.results[0].name)
+    // console.log(charData.results[0].name)
     
 
     //MONTAR CARD
@@ -167,6 +167,7 @@ async function getData(page, name) {
      const anchorBack = document.createElement('a')
      anchorBack.classList.add('text-decoration-none', 'text-light')
      anchorBack.href = "./index.html"
+     
      const backIcon = document.createElement('i')
      backIcon.classList.add('bi', 'bi-caret-left-square-fill', 'fs-2', 'text-light')
      anchorBack.appendChild(backIcon)
@@ -196,7 +197,22 @@ async function getData(page, name) {
     
   }
 
+  async function getOverallData() {
+    const totalChar = await getData();
+    const totalLocations = await getLocations();
+    const totalEpisodes = await getEpisodes();
+  
+    const qtdCharEl = document.querySelector("#qtd-char");
+    const qtdLocationsEl = document.querySelector("#qtd-locations");
+    const qtdEpisodesEl = document.querySelector("#qtd-episodes");
+  
+    qtdCharEl.innerText = totalChar.info.count;
+    qtdLocationsEl.innerText = totalLocations.info.count;
+    qtdEpisodesEl.innerText = totalEpisodes.info.count;
+  }
+
   renderCard()
+  getOverallData()
 
 
 

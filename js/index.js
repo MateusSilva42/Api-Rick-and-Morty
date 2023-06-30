@@ -39,16 +39,31 @@ async function getEpisodes(char = false, episode) {
   }
 }
 
+//checar se existe uma página na session storage (caso clique em algum personagem)
+function checkSessionPage(page){
+  const sessionPage = sessionStorage.getItem('currentPage')
+
+  if(sessionPage) {
+    page = sessionPage
+    sessionStorage.removeItem('currentPage')
+  }
+
+  return page
+}
+
 async function renderCards(page, name = "") {
   const cardsRow = document.querySelector("#cards-row");
+  
+  // let currentCharData = await getData(checkSessionPage(page));
   let currentCharData = await getData(page);
+
+  
 
   if (name) {
     currentCharData = await getData(page, name);
   }
 
   const charData = currentCharData;
-  let counter = 1
 
   if (charData) {
     charData.results.forEach(async (char) => {
@@ -59,8 +74,7 @@ async function renderCards(page, name = "") {
       const article = document.createElement("article");
 
       article.classList.add(
-        "col-6",
-        "col-xl-5",
+        "col-12",
         "h-50",
         "col-lg-5",
         "d-flex",
@@ -73,18 +87,21 @@ async function renderCards(page, name = "") {
       divContainer.classList.add(
         "container",
         "d-flex",
+        'flex-column',
+         'flex-lg-row',
         "justify-content-lg-start",
-        "justify-content-center",
+        "align-items-center",
         // "bg-dark",
         "rounded",
         "m-0",
-        "p-0",
+        "p-3",
+        'p-lg-0',
         "fit-content",
         "card-show"
       );
 
       const divRowIntern = document.createElement("div");
-      divRowIntern.classList.add("row", "d-flex", "flex-column", "flex-lg-row");
+      divRowIntern.classList.add("row", "d-flex", "flex-column", "flex-lg-row", 'max-height');
 
       // DIV da imagem do personagem
       const divColImg = document.createElement("div");
@@ -92,14 +109,15 @@ async function renderCards(page, name = "") {
         "col-12",
         "col-lg-5",
         "d-flex",
-        "align-items-center"
+        "align-items-center",
+        "h-100"
       );
 
       const divImage = document.createElement("div");
       divImage.classList.add("fit-content", "m-1");
 
       const charImage = document.createElement("img");
-      charImage.classList.add("img-fluid", "rounded", "h-100");
+      charImage.classList.add("rounded",'img-size');
       charImage.src = char.image;
 
       // DIV dos dados dos personagens
@@ -108,8 +126,10 @@ async function renderCards(page, name = "") {
         "col",
         "d-flex",
         "align-items-center",
-        "pt-3",
-        "pb-3"
+        "justify-content-center",
+        'mx-3'
+        // "pt-3",
+        // "pb-3"
       );
 
       const divCardData = document.createElement("div");
@@ -120,6 +140,7 @@ async function renderCards(page, name = "") {
       anchorChar.classList.add('char-link')
       anchorChar.addEventListener('click', (e)=>{
         sessionStorage.setItem('Personagem', char.name)
+        sessionStorage.setItem('currentPage', page)
       })
       anchorChar.addEventListener('mouseover', (e)=>{
         charImage.classList.add('img-shake')
@@ -194,8 +215,14 @@ async function renderCards(page, name = "") {
       cardsRow.appendChild(article);
     });
   } else {
+    const main = document.querySelector('main')
+    main.style.backgroundPosition = 'top'
+    main.style.backgroundSize = 'cover'
+
+
     const notFound = document.createElement("article");
     notFound.setAttribute("id", "not-found");
+    notFound.classList.add('d-flex', 'justify-content-center')
 
     const imgNotFound = document.createElement("img");
     imgNotFound.setAttribute("id", "img-not-found");
@@ -216,6 +243,8 @@ function createpageBtn(currentPage, modifier, name, totalPages, disabled = false
   const ulPagination = document.querySelector("#ul-pagination");
   const typeMod = typeof modifier;
 
+  currentPage = Number(checkSessionPage(currentPage))
+
   const liEl = document.createElement("li");
   liEl.classList.add("page-item");
 
@@ -223,38 +252,46 @@ function createpageBtn(currentPage, modifier, name, totalPages, disabled = false
 
   let pageButton = currentPage + modifier
 
-  aEl.classList.add("page-link");
+  aEl.classList.add("page-link", "page-btn");
 
   typeMod == "string"
     ? (aEl.innerText = modifier)
     : (aEl.innerText = currentPage + modifier);
 
+
   if(pageButton <= 0) return
+  if(pageButton > totalPages) return
 
   if (disabled) {
     aEl.classList.add("btn-disabled");
+    aEl.classList.remove('page-btn')
     liEl.appendChild(aEl);
     ulPagination.appendChild(liEl);
     return;
 
   }
-  aEl.setAttribute("href", "#");
-  aEl.addEventListener("click", (e) => {
-    e.preventDefault();
 
+  if(aEl.innerText == currentPage){
+    aEl.classList.add('btn-disabled')
+    aEl.classList.remove('page-btn')
+  }  else {
+    aEl.addEventListener("click", (e) => {
+      e.preventDefault();
   
-
-    if (modifier === "Anterior") {
-      renderPage(currentPage - 1, name);
-    } else if (modifier === "Próximo") {
-      renderPage(currentPage + 1, name);
-      console.log(currentPage +1)
-    } else {
-      renderPage(pageButton, name);
-    }
-
-    window.scrollTo(0, 0, "smooth");
-  });
+      if (modifier === "Anterior") {
+        renderPage(currentPage - 1, name);
+      } else if (modifier === "Próximo") {
+        renderPage(currentPage + 1, name);
+        console.log(currentPage +1)
+      } else {
+        renderPage(pageButton, name);
+      }
+  
+      window.scrollTo(0, 0, "smooth");
+    });
+  }
+  aEl.setAttribute("href", "#");
+  
 
   liEl.appendChild(aEl);
   ulPagination.appendChild(liEl);
@@ -267,9 +304,13 @@ async function renderPageButtons(currentPage, name = "") {
   let btnPreviousDisabled = false
   let btnNextDisabled = false
 
+  // currentPage = checkSessionPage(currentPage)
+
   if (name) {
     currentData = await getData(1, name);
   }
+
+ 
 
   const data = currentData;
   const totalPages = data.info.pages;
@@ -288,6 +329,7 @@ async function renderPageButtons(currentPage, name = "") {
 
 
   if(currentPage === 1) btnPreviousDisabled = true
+  if(currentPage >= totalPages - 2) btnNextDisabled = true
     
   // if(currentPage === totalPages) btnNextDisabled = true
 
@@ -333,6 +375,9 @@ function renderPage(page, name = "") {
   removerCards();
   removerButtons();
 
+  page = checkSessionPage(page)
+
+
   renderCards(page, name);
   renderPageButtons(page, name);
 }
@@ -366,8 +411,9 @@ function search() {
   });
 }
 
-renderCards(1);
-renderPageButtons(1);
+renderPage(checkSessionPage(1))
+// renderCards(1);
+// renderPageButtons(1);
 getOverallData();
 buttonFunction();
 search();

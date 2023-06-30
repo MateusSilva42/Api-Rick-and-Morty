@@ -21,11 +21,16 @@ header {
   height: 30px;
 }
 
+
 #page-icon{
   background-color: black;
   text-align: left;
   margin-bottom:5px;
   padding: 5px;
+}
+
+#top-icon:hover{
+ border: 3px green solid;
 }
 
 .title-blink {
@@ -67,6 +72,7 @@ main{
   height: 2rem;
   border-radius: 9px;
   padding: 10px;
+  margin-top: 3rem;
   color: white;
   border: 2px solid #cfcccc;
   background-image: url(../images/search.png);
@@ -91,6 +97,10 @@ main{
   #char-card{
     margin-bottom: 60rem;
   }
+}
+
+@media (min-width: 992px){
+
 }
 
 
@@ -173,8 +183,21 @@ footer{
   cursor: default;
 } */
 
+.page-btn{
+  background-color: #0c6423!important;
+  color: white!important;
+  border-color: black!important;
+}
+
+.page-btn:hover{
+  background-color: #13c442!important;
+
+}
+
 .btn-disabled{
-  color: gray!important;
+  background-color: #0c6423!important;
+  color: #015216!important;
+  border-color: black!important;
   cursor: default;
 }
 
