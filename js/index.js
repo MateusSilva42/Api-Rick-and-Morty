@@ -40,24 +40,21 @@ async function getEpisodes(char = false, episode) {
 }
 
 //checar se existe uma página na session storage (caso clique em algum personagem)
-function checkSessionPage(page){
-  const sessionPage = sessionStorage.getItem('currentPage')
+function checkSessionPage(page) {
+  const sessionPage = sessionStorage.getItem("currentPage");
 
-  if(sessionPage) {
-    page = sessionPage
-    sessionStorage.removeItem('currentPage')
+  if (sessionPage) {
+    page = sessionPage;
+    sessionStorage.removeItem("currentPage");
   }
 
-  return page
+  return page;
 }
 
 async function renderCards(page, name = "") {
   const cardsRow = document.querySelector("#cards-row");
-  
-  // let currentCharData = await getData(checkSessionPage(page));
-  let currentCharData = await getData(page);
 
-  
+  let currentCharData = await getData(page);
 
   if (name) {
     currentCharData = await getData(page, name);
@@ -68,7 +65,10 @@ async function renderCards(page, name = "") {
   if (charData) {
     charData.results.forEach(async (char) => {
       // console.log(char.location.name) -- traz ultima localização do personagem
-      const episode = await getEpisodes(true, char.episode[char.episode.length - 1]);
+      const episode = await getEpisodes(
+        true,
+        char.episode[char.episode.length - 1]
+      );
 
       // DIVS pais
       const article = document.createElement("article");
@@ -87,21 +87,26 @@ async function renderCards(page, name = "") {
       divContainer.classList.add(
         "container",
         "d-flex",
-        'flex-column',
-         'flex-lg-row',
+        "flex-column",
+        "flex-lg-row",
         "justify-content-lg-start",
         "align-items-center",
-        // "bg-dark",
         "rounded",
         "m-0",
         "p-3",
-        'p-lg-0',
+        "p-lg-0",
         "fit-content",
         "card-show"
       );
 
       const divRowIntern = document.createElement("div");
-      divRowIntern.classList.add("row", "d-flex", "flex-column", "flex-lg-row", 'max-height');
+      divRowIntern.classList.add(
+        "row",
+        "d-flex",
+        "flex-column",
+        "flex-lg-row",
+        "max-height"
+      );
 
       // DIV da imagem do personagem
       const divColImg = document.createElement("div");
@@ -117,7 +122,7 @@ async function renderCards(page, name = "") {
       divImage.classList.add("fit-content", "m-1");
 
       const charImage = document.createElement("img");
-      charImage.classList.add("rounded",'img-size');
+      charImage.classList.add("rounded", "img-size");
       charImage.src = char.image;
 
       // DIV dos dados dos personagens
@@ -127,27 +132,25 @@ async function renderCards(page, name = "") {
         "d-flex",
         "align-items-center",
         "justify-content-center",
-        'mx-3'
-        // "pt-3",
-        // "pb-3"
+        "mx-3"
       );
 
       const divCardData = document.createElement("div");
       divCardData.classList.add("card-data");
 
-      const anchorChar = document.createElement('a')
-      anchorChar.setAttribute('href', './character.html')
-      anchorChar.classList.add('char-link')
-      anchorChar.addEventListener('click', (e)=>{
-        sessionStorage.setItem('Personagem', char.name)
-        sessionStorage.setItem('currentPage', page)
-      })
-      anchorChar.addEventListener('mouseover', (e)=>{
-        charImage.classList.add('img-shake')
-        setTimeout(()=>{
-          charImage.classList.remove('img-shake')
-        }, 500)
-      })
+      const anchorChar = document.createElement("a");
+      anchorChar.setAttribute("href", "./character.html");
+      anchorChar.classList.add("char-link");
+      anchorChar.addEventListener("click", (e) => {
+        sessionStorage.setItem("Personagem", char.name);
+        sessionStorage.setItem("currentPage", page);
+      });
+      anchorChar.addEventListener("mouseover", (e) => {
+        charImage.classList.add("img-shake");
+        setTimeout(() => {
+          charImage.classList.remove("img-shake");
+        }, 500);
+      });
 
       const cardTitle = document.createElement("h3");
       cardTitle.classList.add("fw-bold");
@@ -199,7 +202,7 @@ async function renderCards(page, name = "") {
       DivLastSeen.appendChild(pLastSeenTitle);
       DivLastSeen.appendChild(pLastSeenText);
 
-      anchorChar.appendChild(cardTitle)
+      anchorChar.appendChild(cardTitle);
       divCardData.appendChild(anchorChar);
       divCardData.appendChild(divCharStatus);
       divCardData.appendChild(divLastLocation);
@@ -215,14 +218,13 @@ async function renderCards(page, name = "") {
       cardsRow.appendChild(article);
     });
   } else {
-    const main = document.querySelector('main')
-    main.style.backgroundPosition = 'top'
-    main.style.backgroundSize = 'cover'
-
+    const main = document.querySelector("main");
+    main.style.backgroundPosition = "top";
+    main.style.backgroundSize = "cover";
 
     const notFound = document.createElement("article");
     notFound.setAttribute("id", "not-found");
-    notFound.classList.add('d-flex', 'justify-content-center')
+    notFound.classList.add("d-flex", "justify-content-center");
 
     const imgNotFound = document.createElement("img");
     imgNotFound.setAttribute("id", "img-not-found");
@@ -239,18 +241,24 @@ async function renderCards(page, name = "") {
 }
 
 //CRIA A ESTRUTURA DE CADA BOTÃO DE PÁGINA
-function createpageBtn(currentPage, modifier, name, totalPages, disabled = false) {
+function createpageBtn(
+  currentPage,
+  modifier,
+  name,
+  totalPages,
+  disabled = false
+) {
   const ulPagination = document.querySelector("#ul-pagination");
   const typeMod = typeof modifier;
 
-  currentPage = Number(checkSessionPage(currentPage))
+  currentPage = Number(checkSessionPage(currentPage));
 
   const liEl = document.createElement("li");
   liEl.classList.add("page-item");
 
   const aEl = document.createElement("a");
 
-  let pageButton = currentPage + modifier
+  let pageButton = currentPage + modifier;
 
   aEl.classList.add("page-link", "page-btn");
 
@@ -258,40 +266,37 @@ function createpageBtn(currentPage, modifier, name, totalPages, disabled = false
     ? (aEl.innerText = modifier)
     : (aEl.innerText = currentPage + modifier);
 
-
-  if(pageButton <= 0) return
-  if(pageButton > totalPages) return
+  if (pageButton <= 0) return;
+  if (pageButton > totalPages) return;
 
   if (disabled) {
     aEl.classList.add("btn-disabled");
-    aEl.classList.remove('page-btn')
+    aEl.classList.remove("page-btn");
     liEl.appendChild(aEl);
     ulPagination.appendChild(liEl);
     return;
-
   }
 
-  if(aEl.innerText == currentPage){
-    aEl.classList.add('btn-disabled')
-    aEl.classList.remove('page-btn')
-  }  else {
+  if (aEl.innerText == currentPage) {
+    aEl.classList.add("btn-disabled");
+    aEl.classList.remove("page-btn");
+  } else {
     aEl.addEventListener("click", (e) => {
       e.preventDefault();
-  
+
       if (modifier === "Anterior") {
         renderPage(currentPage - 1, name);
       } else if (modifier === "Próximo") {
         renderPage(currentPage + 1, name);
-        console.log(currentPage +1)
+        console.log(currentPage + 1);
       } else {
         renderPage(pageButton, name);
       }
-  
+
       window.scrollTo(0, 0, "smooth");
     });
   }
   aEl.setAttribute("href", "#");
-  
 
   liEl.appendChild(aEl);
   ulPagination.appendChild(liEl);
@@ -301,16 +306,14 @@ function createpageBtn(currentPage, modifier, name, totalPages, disabled = false
 
 async function renderPageButtons(currentPage, name = "") {
   let currentData = await getData();
-  let btnPreviousDisabled = false
-  let btnNextDisabled = false
+  let btnPreviousDisabled = false;
+  let btnNextDisabled = false;
 
   // currentPage = checkSessionPage(currentPage)
 
   if (name) {
     currentData = await getData(1, name);
   }
-
- 
 
   const data = currentData;
   const totalPages = data.info.pages;
@@ -322,15 +325,12 @@ async function renderPageButtons(currentPage, name = "") {
     ? (nextPage = totalPages)
     : (nextPage = currentPage + 1);
 
- 
-
   // TRAVAR RENDER SE NÃO TIVER MAIS PÁGINAS
   // if(currentPage >= (totalPages - 4)) return
 
+  if (currentPage === 1) btnPreviousDisabled = true;
+  if (currentPage >= totalPages - 2) btnNextDisabled = true;
 
-  if(currentPage === 1) btnPreviousDisabled = true
-  if(currentPage >= totalPages - 2) btnNextDisabled = true
-    
   // if(currentPage === totalPages) btnNextDisabled = true
 
   createpageBtn(currentPage, "Anterior", name, totalPages, btnPreviousDisabled);
@@ -339,7 +339,7 @@ async function renderPageButtons(currentPage, name = "") {
   createpageBtn(currentPage, 0, name, totalPages);
   createpageBtn(currentPage, 1, name, totalPages);
   createpageBtn(currentPage, 2, name, totalPages);
-  createpageBtn(currentPage, "Próximo",name, totalPages, btnNextDisabled);
+  createpageBtn(currentPage, "Próximo", name, totalPages, btnNextDisabled);
 
   // ------------------ANTIGO ---------------------------------------
   // const pageButton = document.createElement("button");
@@ -375,8 +375,7 @@ function renderPage(page, name = "") {
   removerCards();
   removerButtons();
 
-  page = checkSessionPage(page)
-
+  page = checkSessionPage(page);
 
   renderCards(page, name);
   renderPageButtons(page, name);
@@ -411,9 +410,7 @@ function search() {
   });
 }
 
-renderPage(checkSessionPage(1))
-// renderCards(1);
-// renderPageButtons(1);
+renderPage(checkSessionPage(1));
 getOverallData();
 buttonFunction();
 search();

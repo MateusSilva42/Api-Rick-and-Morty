@@ -1,12 +1,12 @@
-html{
+html {
   scroll-behavior: smooth;
 }
 
-body{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: black;
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: black;
 }
 
 header {
@@ -15,22 +15,21 @@ header {
   text-align: center;
 }
 
-#top-icon{
+#top-icon {
   border-radius: 90px;
   width: 30px;
   height: 30px;
 }
 
-
-#page-icon{
+#page-icon {
   background-color: black;
   text-align: left;
-  margin-bottom:5px;
+  margin-bottom: 5px;
   padding: 5px;
 }
 
-#top-icon:hover{
- border: 3px green solid;
+#top-icon:hover {
+  border: 3px green solid;
 }
 
 .title-blink {
@@ -38,26 +37,23 @@ header {
   animation-duration: 4000ms;
   animation-iteration-count: infinite;
   transition-timing-function: ease-in-out;
-
 }
 
-main{
-    background-image: url(../images/FUNDO_3.jpg);
-    background-color: black;
-    background-size:contain;
-    background-position-y: bottom;
-    background-repeat: no-repeat;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-
+main {
+  background-image: url(../images/FUNDO_3.jpg);
+  background-color: black;
+  background-size: contain;
+  background-position-y: bottom;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 #page-title h1 {
-  /* color: #105718; */
   font-weight: bolder;
-  font-family: 'Shadows Into Light', cursive;
+  font-family: "Shadows Into Light", cursive;
   margin: 0 0 9px 0;
   font-size: 5rem;
 }
@@ -80,52 +76,36 @@ main{
   background-color: black;
   background-position: 95%;
   background-size: 1.2rem;
-  padding-right:3rem ;
+  padding-right: 3rem;
 }
 
-#char-card{
+#char-card {
   margin-bottom: 40rem;
 }
 
-@media (max-width: 768px){
-  #char-card{
+@media (max-width: 768px) {
+  #char-card {
     margin-bottom: 25rem;
   }
 }
 
-@media (min-width: 1400px){
-  #char-card{
+@media (min-width: 1400px) {
+  #char-card {
     margin-bottom: 60rem;
   }
 }
 
-@media (min-width: 992px){
-
-}
-
-
-/* #cards-container{
-  display: flex;
-  width: 80%;
-  flex-wrap: wrap;
-  align-content: baseline;
-  margin-top: 100px;
-  justify-content: space-around;
-
-} */
-
-footer{
-  
+footer {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-#img-footer{
+#img-footer {
   height: 350px;
 }
 
-.separator{
+.separator {
   display: block;
   width: 80%;
   background-color: rgb(8, 151, 8);
@@ -134,98 +114,68 @@ footer{
   height: 1px;
 }
 
-#page-footer{
+#page-footer {
   background-color: #0c6423;
   width: 100%;
   color: #fff;
 }
 
-#overall-data{
+#overall-data {
   display: flex;
   justify-content: center;
   height: 200px;
 }
 
-#overall-data p{
+#overall-data p {
   margin: 48px 16px;
 }
 
-#copyright{
+#copyright {
   display: flex;
   justify-content: center;
 }
 
-/* #page-nav{
-  display: flex;
-  flex-wrap: wrap;
-  width: 50%;
-  background-color: green;
-  padding: 8px;
-  border-radius: 40px;
-} */
-
-/* #page-nav button{
-  background-color: #11a722;
-  color: white;
-  border: 1px solid white;
-  border-radius: 30px;
-  cursor: pointer;
-  margin: 2px 1px;
-} */
-
-/* #page-nav button:hover {
-  background-color: #58d667;
-
-} */
-
-/* #page-nav button:disabled{
-  background-color: #0f4214;
-  cursor: default;
-} */
-
-.page-btn{
-  background-color: #0c6423!important;
-  color: white!important;
-  border-color: black!important;
+.page-btn {
+  background-color: #0c6423 !important;
+  color: white !important;
+  border-color: black !important;
 }
 
-.page-btn:hover{
-  background-color: #13c442!important;
-
+.page-btn:hover {
+  background-color: #13c442 !important;
 }
 
-.btn-disabled{
-  background-color: #0c6423!important;
-  color: #015216!important;
-  border-color: black!important;
+.btn-disabled {
+  background-color: #0c6423 !important;
+  color: #015216 !important;
+  border-color: black !important;
   cursor: default;
 }
 
-#not-found{
+#not-found {
   display: flex;
   align-items: center;
   margin: 56px 0;
 }
 
-#img-not-found{
+#img-not-found {
   height: 250px;
 }
 
-#not-found h2{
+#not-found h2 {
   color: green;
 }
 
-
 @keyframes title-color {
   0% {
-      color: #105718;
+    color: #105718;
   }
 
   50% {
     color: #13c442;
-}
+  }
 
   100% {
-      color:#105718 ;
+    color: #105718;
   }
 }
