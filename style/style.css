@@ -6,9 +6,11 @@ body{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: black;
 }
 
 header {
+  background-color: black;
   position: relative;
   text-align: center;
 }
@@ -20,11 +22,26 @@ header {
 }
 
 #page-icon{
+  background-color: black;
   text-align: left;
-  margin: 5px 0 0 5px;
+  margin-bottom:5px;
+  padding: 5px;
+}
+
+.title-blink {
+  animation-name: title-color;
+  animation-duration: 4000ms;
+  animation-iteration-count: infinite;
+  transition-timing-function: ease-in-out;
+
 }
 
 main{
+    background-image: url(../images/FUNDO_3.jpg);
+    background-color: black;
+    background-size:contain;
+    background-position-y: bottom;
+    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,12 +49,12 @@ main{
 
 }
 
-h1 {
-  color: #105718;
+#page-title h1 {
+  /* color: #105718; */
   font-weight: bolder;
-  font-family: "Konkhmer Sleokchher", cursive;
+  font-family: 'Shadows Into Light', cursive;
   margin: 0 0 9px 0;
-  font-size: 3rem;
+  font-size: 5rem;
 }
 
 #page-title {
@@ -50,13 +67,32 @@ h1 {
   height: 2rem;
   border-radius: 9px;
   padding: 10px;
+  color: white;
   border: 2px solid #cfcccc;
   background-image: url(../images/search.png);
   background-repeat: no-repeat;
+  background-color: black;
   background-position: 95%;
   background-size: 1.2rem;
   padding-right:3rem ;
 }
+
+#char-card{
+  margin-bottom: 40rem;
+}
+
+@media (max-width: 768px){
+  #char-card{
+    margin-bottom: 25rem;
+  }
+}
+
+@media (min-width: 1400px){
+  #char-card{
+    margin-bottom: 60rem;
+  }
+}
+
 
 /* #cards-container{
   display: flex;
@@ -69,6 +105,7 @@ h1 {
 } */
 
 footer{
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -88,9 +125,9 @@ footer{
 }
 
 #page-footer{
-  background-color: #1f2821;
+  background-color: #0c6423;
   width: 100%;
-  color: #848484;
+  color: #fff;
 }
 
 #overall-data{
@@ -153,4 +190,19 @@ footer{
 
 #not-found h2{
   color: green;
+}
+
+
+@keyframes title-color {
+  0% {
+      color: #105718;
+  }
+
+  50% {
+    color: #13c442;
+}
+
+  100% {
+      color:#105718 ;
+  }
 }

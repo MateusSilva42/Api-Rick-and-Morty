@@ -67,3 +67,66 @@
 .unknown{
     background-color: gray;
 }
+
+.char-link{
+    text-decoration: none;
+    color: #3ddb68;
+}
+
+.char-link:hover{
+    color: #0c6423;
+}
+
+.card-show {
+	animation-name: card-show;
+    animation-duration: 2000ms;
+    animation-fill-mode: forwards;
+    transition-timing-function: cubic-bezier(.15,.8,.85,.39);
+}
+
+.img-shake {
+    animation-name: img-shake;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+    transition-timing-function: ease-out;
+}
+
+
+
+
+  @keyframes card-show {
+    0% {
+        background-color: #198754;
+        padding: 1rem;
+        
+    }
+    100% {
+      background-color: #212529;
+              transform: translateZ(160px);
+              padding: 0;
+    }
+  }
+
+  @keyframes img-shake {
+    0% {
+        transform: rotate(10deg);
+    }
+
+    25% {
+        transform: rotate(-10deg);
+    }
+
+    50% {
+        transform: rotate(5deg);
+    }
+
+    75% {
+        transform: rotate(-5deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+
+  }
+  

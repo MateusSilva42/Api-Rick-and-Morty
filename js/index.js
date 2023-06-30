@@ -48,14 +48,16 @@ async function renderCards(page, name = "") {
   }
 
   const charData = currentCharData;
+  let counter = 1
 
   if (charData) {
     charData.results.forEach(async (char) => {
       // console.log(char.location.name) -- traz ultima localização do personagem
-      const episode = await getEpisodes(true, char.episode[0]);
+      const episode = await getEpisodes(true, char.episode[char.episode.length - 1]);
 
       // DIVS pais
       const article = document.createElement("article");
+
       article.classList.add(
         "col-6",
         "col-xl-5",
@@ -73,11 +75,12 @@ async function renderCards(page, name = "") {
         "d-flex",
         "justify-content-lg-start",
         "justify-content-center",
-        "bg-dark",
+        // "bg-dark",
         "rounded",
         "m-0",
         "p-0",
-        "fit-content"
+        "fit-content",
+        "card-show"
       );
 
       const divRowIntern = document.createElement("div");
@@ -111,6 +114,19 @@ async function renderCards(page, name = "") {
 
       const divCardData = document.createElement("div");
       divCardData.classList.add("card-data");
+
+      const anchorChar = document.createElement('a')
+      anchorChar.setAttribute('href', './character.html')
+      anchorChar.classList.add('char-link')
+      anchorChar.addEventListener('click', (e)=>{
+        sessionStorage.setItem('Personagem', char.name)
+      })
+      anchorChar.addEventListener('mouseover', (e)=>{
+        charImage.classList.add('img-shake')
+        setTimeout(()=>{
+          charImage.classList.remove('img-shake')
+        }, 500)
+      })
 
       const cardTitle = document.createElement("h3");
       cardTitle.classList.add("fw-bold");
@@ -162,7 +178,8 @@ async function renderCards(page, name = "") {
       DivLastSeen.appendChild(pLastSeenTitle);
       DivLastSeen.appendChild(pLastSeenText);
 
-      divCardData.appendChild(cardTitle);
+      anchorChar.appendChild(cardTitle)
+      divCardData.appendChild(anchorChar);
       divCardData.appendChild(divCharStatus);
       divCardData.appendChild(divLastLocation);
       divCardData.appendChild(DivLastSeen);
@@ -204,11 +221,16 @@ function createpageBtn(currentPage, modifier, name, totalPages, disabled = false
 
   const aEl = document.createElement("a");
 
+  let pageButton = currentPage + modifier
+
   aEl.classList.add("page-link");
 
   typeMod == "string"
     ? (aEl.innerText = modifier)
     : (aEl.innerText = currentPage + modifier);
+
+  if(pageButton <= 0) return
+
   if (disabled) {
     aEl.classList.add("btn-disabled");
     liEl.appendChild(aEl);
@@ -220,12 +242,15 @@ function createpageBtn(currentPage, modifier, name, totalPages, disabled = false
   aEl.addEventListener("click", (e) => {
     e.preventDefault();
 
+  
+
     if (modifier === "Anterior") {
       renderPage(currentPage - 1, name);
     } else if (modifier === "Próximo") {
       renderPage(currentPage + 1, name);
+      console.log(currentPage +1)
     } else {
-      renderPage(currentPage + modifier, name);
+      renderPage(pageButton, name);
     }
 
     window.scrollTo(0, 0, "smooth");
@@ -256,16 +281,15 @@ async function renderPageButtons(currentPage, name = "") {
     ? (nextPage = totalPages)
     : (nextPage = currentPage + 1);
 
-  console.log(currentPage);
-
-  if(currentPage === 1) btnPreviousDisabled = true
-    
-  if(currentPage === totalPages) btnNextDisabled = true
+ 
 
   // TRAVAR RENDER SE NÃO TIVER MAIS PÁGINAS
   // if(currentPage >= (totalPages - 4)) return
-    
 
+
+  if(currentPage === 1) btnPreviousDisabled = true
+    
+  // if(currentPage === totalPages) btnNextDisabled = true
 
   createpageBtn(currentPage, "Anterior", name, totalPages, btnPreviousDisabled);
   createpageBtn(currentPage, -2, name, totalPages);
@@ -273,7 +297,7 @@ async function renderPageButtons(currentPage, name = "") {
   createpageBtn(currentPage, 0, name, totalPages);
   createpageBtn(currentPage, 1, name, totalPages);
   createpageBtn(currentPage, 2, name, totalPages);
-  createpageBtn(currentPage, "Próximo", totalPages, btnNextDisabled);
+  createpageBtn(currentPage, "Próximo",name, totalPages, btnNextDisabled);
 
   // ------------------ANTIGO ---------------------------------------
   // const pageButton = document.createElement("button");

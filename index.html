@@ -17,10 +17,10 @@
       crossorigin="anonymous"
     />
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Konkhmer+Sleokchher&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
   </head>
   <body>
     <header>
@@ -32,8 +32,8 @@
           srcset=""
         />
       </div>
-      <div id="page-title">
-        <h1>API de Rick and Morty</h1>
+      <div id="page-title" class="title-blink">
+        <h1>API do Rick and Morty</h1>
       </div>
       <div>
         <form id="search-form">
@@ -48,7 +48,7 @@
         <!-- Cards de Personagens -->
         <!-- EXEMPLO CARD -->
       
-          <!-- <article
+          <!-- <article id='char-card'
             class="col-xl-5 col-lg-5 d-flex justify-content-center char-card text-light"
           >
             <div
@@ -91,6 +91,7 @@
         </div>
       </section>
 
+
       <section id="page-nav">
         
         <nav aria-label="Page navigation">
@@ -105,13 +106,15 @@
         </nav>
 
       </section>
+
+   
     </main>
     <footer>
-      <img
+      <!-- <img
         id="img-footer"
         src="./images/rick-and-morty-portal-shoes-white-clothing-zavvi-23.png"
         alt="rick and morty footer image"
-      />
+      /> -->
 
       <section id="page-footer">
         <div id="overall-data">
